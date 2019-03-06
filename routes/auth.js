@@ -8,7 +8,7 @@ module.exports = function (passport) {
       username = body.username,
       password = body.password;
     //check if user already exists
-    User.findOne({username}, function(err, res){
+    User.findOne({username}, function(err, doc){
       if(err) {res.status(500).send('internal server error')}
       if(doc) {
         res.status(401).send('Username already exists');
@@ -25,6 +25,12 @@ module.exports = function (passport) {
         });
       }
     });
+  });
+  router.post('/login', passport.authenticate('local', {
+    failureRedirect: '/login',
+    successRedirect: '/profile'
+  }), function(req, res) {
+    res.send('hey chiku');
   });
   return router;
 }

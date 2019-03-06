@@ -14,4 +14,8 @@ router.get('/signup', function(req, res, next) {
   res.render('signup');
 });
 
+router.get('/profile', function(req, res, next) {
+  res.send(req.session);
+});
+
 module.exports = router;

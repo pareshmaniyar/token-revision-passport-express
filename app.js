@@ -6,8 +6,8 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
-
-mongoose.connect('mongodb://localhost:27017/');
+require('./passport')(passport);
+mongoose.connect('mongodb://localhost:27017/user-info');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -29,6 +29,9 @@ app.use(session({
   saveUninitialized: false,
   resave: false
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
